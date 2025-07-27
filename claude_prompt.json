@@ -1,0 +1,12 @@
+{
+  "anthropic_version": "bedrock-2023-05-31",
+  "max_tokens": 500,
+  "temperature": 0.5,
+  "top_p": 0.9,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing in simple terms"
+    }
+  ]
+}
