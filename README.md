@@ -23,6 +23,8 @@ This Terraform configuration sets up Amazon Bedrock with the necessary IAM roles
 - Configures secure access controls and permissions
 - Easy deployment and cleanup with Terraform
 
+**Note:** Bedrock model invocation logging must be enabled via the AWS Console or CLI. Terraform cannot enable logging for Bedrock models directly; it only provisions the S3 bucket for logs.
+
 ## Prerequisites
 
 - [AWS CLI](https://aws.amazon.com/cli/) installed and configured with profile `raj-private`
@@ -79,6 +81,21 @@ aws bedrock list-foundation-models \
 ```
 
 ## Invoking Models
+
+### Using the Provided Bash Script (`invoke_claude.sh`)
+
+You can quickly test the Anthropic Claude model via Amazon Bedrock using the included `invoke_claude.sh` script. This script:
+- Builds a sample prompt (see `claude_prompt.json` for structure)
+- Invokes the Claude 3 Haiku model using the AWS CLI
+- Prints the model response or troubleshooting tips if the call fails
+
+**Usage:**
+```bash
+bash invoke_claude.sh
+```
+By default, the script uses the profile and region set in `variables.tf`. To use different values, edit the script or export environment variables before running.
+
+---
 
 To invoke a model, you'll need to know its model ID. Here's a general command structure:
 
@@ -152,6 +169,7 @@ terraform destroy -auto-approve
 - The S3 bucket for logs is configured with strict access controls.
 - IAM policies follow the principle of least privilege.
 - Sensitive data should never be committed to version control.
+- The IAM role is set up for Bedrock service by default. If you wish to use this role with other services (e.g., Lambda, EC2), you may need to adjust the trust policy in `main.tf` accordingly.
 
 ## Contributing
 
